@@ -196,14 +196,14 @@ function PickerModal({ title, emoji, options, selected, th, onSelect, onClose }:
 
 interface ComponentRowProps {
   emoji: string;
-  label: string;
+  title: string;
   options: MealComponent[];
   selected: string | null;
   th: ThemeConfig;
   onOpen: () => void;
 }
 
-function ComponentRow({ emoji, label, options, selected, th, onOpen }: ComponentRowProps) {
+function ComponentRow({ emoji, title, options, selected, th, onOpen }: ComponentRowProps) {
   if (options.length === 0) return null;
   const selectedOpt = selected ? options.find((o) => o.id === selected) : null;
 
@@ -221,7 +221,7 @@ function ComponentRow({ emoji, label, options, selected, th, onOpen }: Component
         {selectedOpt ? (
           <span className={`text-sm font-semibold ${th.accentText}`}>{selectedOpt.label}</span>
         ) : (
-          <span className="text-sm text-gray-400">בחר {label}...</span>
+          <span className="text-sm text-gray-400">בחר {title}...</span>
         )}
         <span className="text-base">{emoji}</span>
       </div>
@@ -239,7 +239,6 @@ interface MealSlotProps {
   components: MealComponentSet;
   value: MealSelection;
   onChange: (v: MealSelection) => void;
-  index?: number;
 }
 
 export function MealSlot({
@@ -250,7 +249,6 @@ export function MealSlot({
   components,
   value,
   onChange,
-  index = 0,
 }: MealSlotProps) {
   const [openPicker, setOpenPicker] = useState<'protein' | 'carbs' | 'side' | null>(null);
   const th = THEMES[theme];
@@ -259,9 +257,9 @@ export function MealSlot({
   const hasAny = !!(sel.protein || sel.carbs || sel.side);
 
   const pickerConfig = {
-    protein: { emoji: '🥩', label: 'חלבון',    options: components.protein, selected: sel.protein, onSelect: (id: string | null) => onChange({ ...sel, protein: id }) },
-    carbs:   { emoji: '🌾', label: 'פחמימות',  options: components.carbs,   selected: sel.carbs,   onSelect: (id: string | null) => onChange({ ...sel, carbs: id   }) },
-    side:    { emoji: '🥗', label: 'תוספת',    options: components.side,    selected: sel.side,    onSelect: (id: string | null) => onChange({ ...sel, side: id    }) },
+    protein: { emoji: '🥩', title: 'חלבון',    options: components.protein, selected: sel.protein, onSelect: (id: string | null) => onChange({ ...sel, protein: id }) },
+    carbs:   { emoji: '🌾', title: 'פחמימות',  options: components.carbs,   selected: sel.carbs,   onSelect: (id: string | null) => onChange({ ...sel, carbs: id   }) },
+    side:    { emoji: '🥗', title: 'תוספת',    options: components.side,    selected: sel.side,    onSelect: (id: string | null) => onChange({ ...sel, side: id    }) },
   } as const;
 
   return (

@@ -147,7 +147,7 @@ export default function DailyPage() {
         <MealSlot
           icon={log.isCheatDay && log.cheatMealSlot === 'breakfast' ? '🍔' : '🌅'}
           theme={log.isCheatDay && log.cheatMealSlot === 'breakfast' ? 'orange' : 'amber'}
-          index={0}
+         
           title={t.meals.breakfast}
           note="* ביצים/גבינות: גלם | לחם: מהאריזה | ירקות: טריים"
           components={breakfastComponents}
@@ -157,7 +157,7 @@ export default function DailyPage() {
 
         {/* Morning snack */}
         <MealSlot
-          icon="🍎" theme="teal" index={1}
+          icon="🍎" theme="teal"
           title={t.meals.morningSnack}
           note="* משקל לפני אכילה, כמו שלוקחים מהאריזה"
           components={SNACK_COMPONENTS}
@@ -169,7 +169,7 @@ export default function DailyPage() {
         <MealSlot
           icon={log.isCheatDay && log.cheatMealSlot === 'lunch' ? '🍔' : '☀️'}
           theme={log.isCheatDay && log.cheatMealSlot === 'lunch' ? 'orange' : 'green'}
-          index={2}
+         
           title={log.isCheatDay && log.cheatMealSlot === 'lunch' ? t.day.cheatMeal : t.meals.lunch}
           note="* חלבון (עוף/בשר): גלם | פחמימות (אורז/קוסקוס): לאחר בישול | ירקות: טריים"
           components={lunchComponents}
@@ -179,7 +179,7 @@ export default function DailyPage() {
 
         {/* Afternoon snack */}
         <MealSlot
-          icon="🍊" theme="orange" index={3}
+          icon="🍊" theme="orange"
           title={t.meals.afternoonSnack}
           note="* משקל לפני אכילה, כמו שלוקחים מהאריזה"
           components={SNACK_COMPONENTS}
@@ -191,7 +191,7 @@ export default function DailyPage() {
         <MealSlot
           icon={log.isCheatDay && log.cheatMealSlot === 'evening' ? '🍔' : '🌙'}
           theme={log.isCheatDay && log.cheatMealSlot === 'evening' ? 'orange' : 'purple'}
-          index={4}
+         
           title={log.isCheatDay && log.cheatMealSlot === 'evening' ? t.day.cheatMeal : t.meals.evening}
           note="* חלבון (עוף/טונה): גלם | לחם/קרקרים: מהאריזה | ירקות: טריים"
           components={eveningComponents}
