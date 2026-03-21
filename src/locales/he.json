@@ -1,0 +1,74 @@
+{
+  "app": {
+    "title": "פיט הפנס",
+    "loading": "טוען..."
+  },
+  "nav": {
+    "today": "היום",
+    "settings": "הגדרות",
+    "previous": "הקודם",
+    "next": "הבא"
+  },
+  "day": {
+    "trainingDay": "יום אימון",
+    "cheatMeal": "ארוחת צ׳יט",
+    "cheatBanner": "היום ארוחת צ׳יט - תהנו! 🎉"
+  },
+  "meals": {
+    "noSelection": "לא נבחרה ארוחה",
+    "noSnack": "ללא חטיף",
+    "breakfast": "ארוחת בוקר",
+    "breakfastTime": "07:30~",
+    "morningSnack": "חטיף בוקר",
+    "morningSnackTime": "10:00~",
+    "lunch": "ארוחת צהריים",
+    "lunchTime": "13:00~",
+    "afternoonSnack": "חטיף אחה\"צ",
+    "afternoonSnackTime": "16:00~",
+    "evening": "ארוחת ערב",
+    "eveningTime": "19:00~",
+    "veggies": "ירקות היום",
+    "ateVeggies": "אכלתי ירקות היום 🥦",
+    "veggieReminder": "אל תשכח ירקות! מלפפון, גמבה, גזר - חופשי 🥦"
+  },
+  "macros": {
+    "calories": "קל׳",
+    "protein": "חלבון",
+    "carbs": "פחמ׳",
+    "fat": "שומן"
+  },
+  "summary": {
+    "caloriesLabel": "קלוריות",
+    "proteinLabel": "חלבון",
+    "waterLabel": "מים",
+    "waterUnit": "כוסות",
+    "addWater": "+",
+    "proteinUnit": "גרם"
+  },
+  "settings": {
+    "title": "הגדרות אישיות",
+    "weight": "כמה את/ה שוקל/ת? (ק״ג)",
+    "height": "מה הגובה שלך? (ס״מ)",
+    "age": "מה גילך?",
+    "gender": "מין",
+    "male": "זכר",
+    "female": "נקבה",
+    "activityLevel": "רמת פעילות",
+    "sedentary": "יושבני (עבודה במשרד)",
+    "light": "קצת פעיל",
+    "moderate": "פעיל בינוני",
+    "active": "פעיל מאוד",
+    "save": "שמור",
+    "saved": "הגדרות נשמרו!",
+    "goalSummary": "היעד היומי שלך: {calories} קלוריות ו-{protein} גרם חלבון",
+    "waterGoal": "שתה {glasses} כוסות מים ביום",
+    "weightPlaceholder": "לדוגמה: 75",
+    "heightPlaceholder": "לדוגמה: 170",
+    "agePlaceholder": "לדוגמה: 30"
+  },
+  "errors": {
+    "required": "שדה חובה",
+    "min": "ערך נמוך מדי",
+    "max": "ערך גבוה מדי"
+  }
+}

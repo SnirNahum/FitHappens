@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E '\\\\.\\(tsx?|jsx?|json|md\\)$')",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run:*)",
+      "Bash(start npm:*)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(d.get\\(''''version''''\\)\\); print\\(list\\(d.get\\(''''exports'''',{}\\).keys\\(\\)\\)[:10]\\)\")",
+      "Bash(node -e \"const p=require\\(''./node_modules/react-day-picker/package.json''\\); console.log\\(''v''+p.version\\); console.log\\(Object.keys\\(p.exports||{}\\).slice\\(0,10\\)\\)\")"
+    ]
+  }
+}

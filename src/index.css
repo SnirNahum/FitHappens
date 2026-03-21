@@ -1,0 +1,82 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  font-family: 'Heebo', sans-serif;
+}
+
+button, [role="button"], a, select, label[for] {
+  cursor: pointer;
+}
+
+:root {
+  --bg: #f0fdf4;
+  font-size: 18px;
+}
+
+body {
+  background-color: var(--bg);
+  overscroll-behavior: none;
+}
+
+/* Custom scrollbar for dropdown */
+.dropdown-scroll::-webkit-scrollbar { width: 4px; }
+.dropdown-scroll::-webkit-scrollbar-track { background: transparent; }
+.dropdown-scroll::-webkit-scrollbar-thumb { background: #d1fae5; border-radius: 4px; }
+
+/* react-day-picker custom theme */
+.rdp-root {
+  --rdp-accent-color: #22c55e;
+  --rdp-accent-background-color: #f0fdf4;
+  --rdp-range_start-color: white;
+  --rdp-range_end-color: white;
+  --rdp-selected-border: none;
+  font-family: 'Heebo', sans-serif;
+  --rdp-day-width: 38px;
+  --rdp-day-height: 38px;
+  --rdp-day_button-width: 34px;
+  --rdp-day_button-height: 34px;
+  --rdp-day_button-border-radius: 50%;
+}
+.rdp-day_button {
+  font-family: 'Heebo', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+}
+.rdp-selected .rdp-day_button {
+  background-color: #22c55e;
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(34,197,94,0.4);
+}
+.rdp-today .rdp-day_button {
+  color: #16a34a;
+  font-weight: 700;
+}
+.rdp-weekday {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9ca3af;
+  font-family: 'Heebo', sans-serif;
+}
+.rdp-nav_button, .rdp-button_next, .rdp-button_previous {
+  color: #6b7280;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rdp-nav_button:hover, .rdp-button_next:hover, .rdp-button_previous:hover {
+  background-color: #f3f4f6;
+}
+.rdp-caption_label, .rdp-month_caption {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+  font-family: 'Heebo', sans-serif;
+}
+.calendar-popup {
+  min-width: 280px;
+}
