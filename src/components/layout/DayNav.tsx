@@ -49,7 +49,9 @@ export function DayNav({
 
   const hasAnyLog = (d: string) => {
     const l = logs[d];
-    return !!l && !!(l.breakfast || l.lunch || l.evening || l.morningSnack || l.afternoonSnack);
+    if (!l) return false;
+    const filled = (sel: typeof l.breakfast) => !!(sel?.protein || sel?.carbs || sel?.side);
+    return filled(l.breakfast) || filled(l.lunch) || filled(l.evening) || filled(l.afternoonSnack);
   };
 
   return (
@@ -141,7 +143,7 @@ export function DayNav({
         </motion.button>
       </div>
 
-      {/* ── Toggles — centered ──────────────────────────── */}
+      {/* ── Toggles - centered ──────────────────────────── */}
       <div className="flex items-center justify-center gap-2 pb-3">
         <motion.button
           whileTap={{ scale: 0.92 }}

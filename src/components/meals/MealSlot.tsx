@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Check, ChevronDown, X } from 'lucide-react';
-import { createPortal } from 'react-dom';
-import type { MealComponent, MealComponentSet, MealSelection } from '../../types';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Check, ChevronDown, X } from "lucide-react";
+import { createPortal } from "react-dom";
+import type { MealComponent, MealComponentSet, MealSelection } from "../../types";
+import { scoreComponent } from "../../utils/smartMeals";
 
-type Theme = 'amber' | 'teal' | 'green' | 'orange' | 'purple';
+type Theme = "amber" | "teal" | "green" | "orange" | "purple";
 
 interface ThemeConfig {
   iconBg: string;
@@ -20,59 +21,59 @@ interface ThemeConfig {
 
 const THEMES: Record<Theme, ThemeConfig> = {
   amber: {
-    iconBg:      'bg-amber-100',
-    accent:      'bg-amber-500',
-    accentText:  'text-amber-600',
-    calBg:       'bg-amber-500',
-    calText:     'text-white',
-    checkBg:     'bg-amber-400',
-    checkBorder: 'border-amber-300',
-    rowBg:       'bg-amber-50 border-amber-100',
-    rowSelected: 'bg-amber-500 border-amber-500 text-white',
+    iconBg: "bg-amber-100",
+    accent: "bg-amber-500",
+    accentText: "text-amber-600",
+    calBg: "bg-amber-500",
+    calText: "text-white",
+    checkBg: "bg-amber-400",
+    checkBorder: "border-amber-300",
+    rowBg: "bg-amber-50 border-amber-100",
+    rowSelected: "bg-amber-500 border-amber-500 text-white",
   },
   teal: {
-    iconBg:      'bg-teal-100',
-    accent:      'bg-teal-500',
-    accentText:  'text-teal-600',
-    calBg:       'bg-teal-500',
-    calText:     'text-white',
-    checkBg:     'bg-teal-500',
-    checkBorder: 'border-teal-300',
-    rowBg:       'bg-teal-50 border-teal-100',
-    rowSelected: 'bg-teal-500 border-teal-500 text-white',
+    iconBg: "bg-teal-100",
+    accent: "bg-teal-500",
+    accentText: "text-teal-600",
+    calBg: "bg-teal-500",
+    calText: "text-white",
+    checkBg: "bg-teal-500",
+    checkBorder: "border-teal-300",
+    rowBg: "bg-teal-50 border-teal-100",
+    rowSelected: "bg-teal-500 border-teal-500 text-white",
   },
   green: {
-    iconBg:      'bg-green-100',
-    accent:      'bg-green-600',
-    accentText:  'text-green-700',
-    calBg:       'bg-green-600',
-    calText:     'text-white',
-    checkBg:     'bg-green-500',
-    checkBorder: 'border-green-400',
-    rowBg:       'bg-green-50 border-green-100',
-    rowSelected: 'bg-green-600 border-green-600 text-white',
+    iconBg: "bg-green-100",
+    accent: "bg-green-600",
+    accentText: "text-green-700",
+    calBg: "bg-green-600",
+    calText: "text-white",
+    checkBg: "bg-green-500",
+    checkBorder: "border-green-400",
+    rowBg: "bg-green-50 border-green-100",
+    rowSelected: "bg-green-600 border-green-600 text-white",
   },
   orange: {
-    iconBg:      'bg-orange-100',
-    accent:      'bg-orange-500',
-    accentText:  'text-orange-600',
-    calBg:       'bg-orange-500',
-    calText:     'text-white',
-    checkBg:     'bg-orange-400',
-    checkBorder: 'border-orange-300',
-    rowBg:       'bg-orange-50 border-orange-100',
-    rowSelected: 'bg-orange-500 border-orange-500 text-white',
+    iconBg: "bg-orange-100",
+    accent: "bg-orange-500",
+    accentText: "text-orange-600",
+    calBg: "bg-orange-500",
+    calText: "text-white",
+    checkBg: "bg-orange-400",
+    checkBorder: "border-orange-300",
+    rowBg: "bg-orange-50 border-orange-100",
+    rowSelected: "bg-orange-500 border-orange-500 text-white",
   },
   purple: {
-    iconBg:      'bg-purple-100',
-    accent:      'bg-purple-600',
-    accentText:  'text-purple-700',
-    calBg:       'bg-purple-600',
-    calText:     'text-white',
-    checkBg:     'bg-purple-500',
-    checkBorder: 'border-purple-300',
-    rowBg:       'bg-purple-50 border-purple-100',
-    rowSelected: 'bg-purple-600 border-purple-600 text-white',
+    iconBg: "bg-purple-100",
+    accent: "bg-purple-600",
+    accentText: "text-purple-700",
+    calBg: "bg-purple-600",
+    calText: "text-white",
+    checkBg: "bg-purple-500",
+    checkBorder: "border-purple-300",
+    rowBg: "bg-purple-50 border-purple-100",
+    rowSelected: "bg-purple-600 border-purple-600 text-white",
   },
 };
 
@@ -83,13 +84,13 @@ function sumMacros(
   const lookup = (id: string | null, list: MealComponent[]) =>
     id ? (list.find((c) => c.id === id) ?? null) : null;
   const p = lookup(selection.protein, components.protein);
-  const c = lookup(selection.carbs,   components.carbs);
-  const s = lookup(selection.side,    components.side);
+  const c = lookup(selection.carbs, components.carbs);
+  const s = lookup(selection.side, components.side);
   return {
     calories: (p?.calories ?? 0) + (c?.calories ?? 0) + (s?.calories ?? 0),
     proteinG: (p?.proteinG ?? 0) + (c?.proteinG ?? 0) + (s?.proteinG ?? 0),
-    carbsG:   (p?.carbsG   ?? 0) + (c?.carbsG   ?? 0) + (s?.carbsG   ?? 0),
-    fatG:     (p?.fatG     ?? 0) + (c?.fatG     ?? 0) + (s?.fatG     ?? 0),
+    carbsG: (p?.carbsG ?? 0) + (c?.carbsG ?? 0) + (s?.carbsG ?? 0),
+    fatG: (p?.fatG ?? 0) + (c?.fatG ?? 0) + (s?.fatG ?? 0),
   };
 }
 
@@ -101,11 +102,39 @@ interface PickerModalProps {
   options: MealComponent[];
   selected: string | null;
   th: ThemeConfig;
+  remaining?: { calories: number; proteinG: number };
+  isTrainingDay?: boolean;
+  slotBudgetRatio?: number;
   onSelect: (id: string | null) => void;
   onClose: () => void;
 }
 
-function PickerModal({ title, emoji, options, selected, th, onSelect, onClose }: PickerModalProps) {
+function PickerModal({
+  title,
+  emoji,
+  options,
+  selected,
+  th,
+  remaining,
+  isTrainingDay = false,
+  slotBudgetRatio = 0.25,
+  onSelect,
+  onClose,
+}: PickerModalProps) {
+  // Sort options by score if we have remaining data
+  const sortedOptions = remaining
+    ? [...options].sort(
+        (a, b) =>
+          scoreComponent(b, remaining, slotBudgetRatio, isTrainingDay) -
+          scoreComponent(a, remaining, slotBudgetRatio, isTrainingDay),
+      )
+    : options;
+
+  const topId = remaining && sortedOptions.length > 0 ? sortedOptions[0].id : null;
+
+  const calOver = remaining && remaining.calories < 0;
+  const protDone = remaining && remaining.proteinG <= 0;
+
   return createPortal(
     <AnimatePresence>
       <motion.div
@@ -123,10 +152,10 @@ function PickerModal({ title, emoji, options, selected, th, onSelect, onClose }:
         {/* Sheet */}
         <motion.div
           className="relative w-full max-w-lg bg-white rounded-t-3xl shadow-2xl overflow-hidden"
-          initial={{ y: '100%' }}
+          initial={{ y: "100%" }}
           animate={{ y: 0 }}
-          exit={{ y: '100%' }}
-          transition={{ type: 'spring', stiffness: 320, damping: 32 }}
+          exit={{ y: "100%" }}
+          transition={{ type: "spring", stiffness: 320, damping: 32 }}
         >
           {/* Handle */}
           <div className="flex justify-center pt-3 pb-1">
@@ -141,41 +170,92 @@ function PickerModal({ title, emoji, options, selected, th, onSelect, onClose }:
             >
               <X size={15} />
             </button>
-            <span className="font-bold text-gray-900 text-sm">{emoji} {title}</span>
+            <span className="font-bold text-gray-900 text-sm">
+              {emoji} {title}
+            </span>
             <div className="w-8" />
           </div>
 
+          {/* Remaining budget strip */}
+          {remaining && (
+            <div
+              className={`flex items-center justify-center gap-3 px-5 py-2 text-xs font-medium ${
+                calOver ? "bg-red-50 text-red-600" : "bg-gray-50 text-gray-500"
+              }`}
+            >
+              <span>
+                נשאר להיום:{" "}
+                <span
+                  className={`font-bold ${calOver ? "text-red-600" : "text-gray-800"}`}
+                >
+                  {Math.round(remaining.calories)} קל׳
+                </span>
+              </span>
+              <span className="text-gray-300">·</span>
+              <span>
+                חלבון:{" "}
+                <span
+                  className={`font-bold ${protDone ? "text-green-600" : "text-gray-800"}`}
+                >
+                  {protDone ? "✓ הגעת ליעד" : `${Math.round(remaining.proteinG)}g`}
+                </span>
+              </span>
+            </div>
+          )}
+
           {/* Options */}
-          <div className="px-4 py-4 space-y-2 max-h-[60vh] overflow-y-auto">
+          <div className="px-4 py-4 space-y-2 max-h-[55vh] overflow-y-auto">
             {/* Clear option */}
             {selected && (
               <motion.button
                 type="button"
                 whileTap={{ scale: 0.97 }}
-                onClick={() => { onSelect(null); onClose(); }}
+                onClick={() => {
+                  onSelect(null);
+                  onClose();
+                }}
                 className="w-full text-right px-4 py-3 rounded-xl border border-dashed border-gray-300 text-sm text-gray-400 hover:bg-gray-50 transition-colors"
               >
                 הסר בחירה ✕
               </motion.button>
             )}
-            {options.map((opt) => {
+            {sortedOptions.map((opt) => {
               const isSelected = opt.id === selected;
+              const isTop = opt.id === topId && !isSelected && opt.id !== selected;
               return (
                 <motion.button
                   key={opt.id}
                   type="button"
                   whileTap={{ scale: 0.97 }}
-                  onClick={() => { onSelect(opt.id); onClose(); }}
+                  onClick={() => {
+                    onSelect(opt.id);
+                    onClose();
+                  }}
                   className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl border transition-all ${
-                    isSelected ? th.rowSelected : 'bg-white border-gray-100 hover:bg-gray-50'
+                    isSelected
+                      ? th.rowSelected
+                      : "bg-white border-gray-100 hover:bg-gray-50"
                   }`}
                 >
-                  <div className={`flex items-center gap-2 text-xs font-medium ${isSelected ? 'text-white/80' : 'text-gray-400'}`}>
-                    <span>{opt.calories} קל׳</span>
-                    <span>·</span>
-                    <span>{opt.proteinG}g חלבון</span>
+                  <div className="flex items-center gap-2">
+                    {isTop && (
+                      <span
+                        className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${th.accent} text-white`}
+                      >
+                        ⭐ מומלץ
+                      </span>
+                    )}
+                    <div
+                      className={`flex items-center gap-1.5 text-xs font-medium ${isSelected ? "text-white/80" : "text-gray-400"}`}
+                    >
+                      <span>{opt.calories} קל׳</span>
+                      <span>·</span>
+                      <span>{opt.proteinG}g חלבון</span>
+                    </div>
                   </div>
-                  <span className={`font-semibold text-sm text-right ${isSelected ? 'text-white' : 'text-gray-800'}`}>
+                  <span
+                    className={`font-semibold text-sm text-right ${isSelected ? "text-white" : "text-gray-800"}`}
+                  >
                     {opt.label}
                   </span>
                 </motion.button>
@@ -203,7 +283,14 @@ interface ComponentRowProps {
   onOpen: () => void;
 }
 
-function ComponentRow({ emoji, title, options, selected, th, onOpen }: ComponentRowProps) {
+function ComponentRow({
+  emoji,
+  title,
+  options,
+  selected,
+  th,
+  onOpen,
+}: ComponentRowProps) {
   if (options.length === 0) return null;
   const selectedOpt = selected ? options.find((o) => o.id === selected) : null;
 
@@ -213,13 +300,15 @@ function ComponentRow({ emoji, title, options, selected, th, onOpen }: Component
       whileTap={{ scale: 0.98 }}
       onClick={onOpen}
       className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl border transition-all ${
-        selectedOpt ? th.rowBg : 'bg-gray-50 border-gray-100 hover:bg-gray-100'
+        selectedOpt ? th.rowBg : "bg-gray-50 border-gray-100 hover:bg-gray-100"
       }`}
     >
-      <ChevronDown size={14} className={selectedOpt ? th.accentText : 'text-gray-400'} />
+      <ChevronDown size={14} className={selectedOpt ? th.accentText : "text-gray-400"} />
       <div className="flex items-center gap-2 text-right">
         {selectedOpt ? (
-          <span className={`text-sm font-semibold ${th.accentText}`}>{selectedOpt.label}</span>
+          <span className={`text-sm font-semibold ${th.accentText}`}>
+            {selectedOpt.label}
+          </span>
         ) : (
           <span className="text-sm text-gray-400">בחר {title}...</span>
         )}
@@ -239,27 +328,75 @@ interface MealSlotProps {
   components: MealComponentSet;
   value: MealSelection;
   onChange: (v: MealSelection) => void;
+  remaining?: { calories: number; proteinG: number };
+  isTrainingDay?: boolean;
+  slotBudgetRatio?: number;
+  /** protein-id → allowed carb-ids; when set, carbs list is filtered dynamically */
+  compatibilityMap?: Record<string, string[]>;
+  /** Override the 2nd dropdown label (emoji + title) */
+  carbsLabel?: { emoji: string; title: string };
 }
 
 export function MealSlot({
   icon,
   title,
   note,
-  theme = 'green',
+  theme = "green",
   components,
   value,
   onChange,
+  remaining,
+  isTrainingDay = false,
+  slotBudgetRatio = 0.25,
+  compatibilityMap,
+  carbsLabel,
 }: MealSlotProps) {
-  const [openPicker, setOpenPicker] = useState<'protein' | 'carbs' | 'side' | null>(null);
+  const [openPicker, setOpenPicker] = useState<"protein" | "carbs" | "side" | null>(null);
   const th = THEMES[theme];
   const sel: MealSelection = value ?? { protein: null, carbs: null, side: null };
   const totals = sumMacros(components, sel);
   const hasAny = !!(sel.protein || sel.carbs || sel.side);
 
+  // Filter carbs based on selected protein + compatibility map.
+  // If map is present but no protein selected → hide carbs (empty array).
+  const allowedCarbIds = compatibilityMap
+    ? sel.protein
+      ? (compatibilityMap[sel.protein] ?? [])
+      : []
+    : null;
+  const filteredCarbs =
+    allowedCarbIds !== null
+      ? components.carbs.filter((c) => allowedCarbIds.includes(c.id))
+      : components.carbs;
+
   const pickerConfig = {
-    protein: { emoji: '🥩', title: 'חלבון',    options: components.protein, selected: sel.protein, onSelect: (id: string | null) => onChange({ ...sel, protein: id }) },
-    carbs:   { emoji: '🌾', title: 'פחמימות',  options: components.carbs,   selected: sel.carbs,   onSelect: (id: string | null) => onChange({ ...sel, carbs: id   }) },
-    side:    { emoji: '🥗', title: 'תוספת',    options: components.side,    selected: sel.side,    onSelect: (id: string | null) => onChange({ ...sel, side: id    }) },
+    protein: {
+      emoji: "🥩",
+      title: "חלבון",
+      options: components.protein,
+      selected: sel.protein,
+      onSelect: (id: string | null) => {
+        // Auto-clear carbs if incompatible with new protein selection
+        const newAllowed = id && compatibilityMap ? (compatibilityMap[id] ?? []) : null;
+        const keepCarbs =
+          newAllowed === null ? true : sel.carbs ? newAllowed.includes(sel.carbs) : true;
+        onChange({ ...sel, protein: id, carbs: keepCarbs ? sel.carbs : null });
+      },
+    },
+    carbs: {
+      emoji: carbsLabel?.emoji ?? "🌾",
+      title: carbsLabel?.title ?? "פחמימות",
+      options: filteredCarbs,
+      selected: sel.carbs,
+      onSelect: (id: string | null) => onChange({ ...sel, carbs: id }),
+    },
+    side: {
+      emoji: "🥗",
+      title: "תוספת",
+      options: components.side,
+      selected: sel.side,
+      onSelect: (id: string | null) => onChange({ ...sel, side: id }),
+    },
   } as const;
 
   return (
@@ -279,7 +416,9 @@ export function MealSlot({
 
           <div className="flex items-center gap-2.5">
             <span className="font-bold text-sm text-gray-900">{title}</span>
-            <div className={`flex items-center justify-center w-10 h-10 rounded-full text-xl shrink-0 ${th.iconBg}`}>
+            <div
+              className={`flex items-center justify-center w-10 h-10 rounded-full text-xl shrink-0 ${th.iconBg}`}
+            >
               {icon}
             </div>
           </div>
@@ -292,9 +431,21 @@ export function MealSlot({
 
         {/* Component row buttons */}
         <div className="space-y-2">
-          <ComponentRow {...pickerConfig.protein} th={th} onOpen={() => setOpenPicker('protein')} />
-          <ComponentRow {...pickerConfig.carbs}   th={th} onOpen={() => setOpenPicker('carbs')} />
-          <ComponentRow {...pickerConfig.side}    th={th} onOpen={() => setOpenPicker('side')} />
+          <ComponentRow
+            {...pickerConfig.protein}
+            th={th}
+            onOpen={() => setOpenPicker("protein")}
+          />
+          <ComponentRow
+            {...pickerConfig.carbs}
+            th={th}
+            onOpen={() => setOpenPicker("carbs")}
+          />
+          <ComponentRow
+            {...pickerConfig.side}
+            th={th}
+            onOpen={() => setOpenPicker("side")}
+          />
         </div>
 
         {/* Totals bar */}
@@ -302,9 +453,9 @@ export function MealSlot({
           {hasAny && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
+              animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.22, ease: 'easeOut' }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
               className="overflow-hidden"
             >
               <div className="flex items-center justify-between bg-gray-50 rounded-xl px-3 py-2">
@@ -315,7 +466,9 @@ export function MealSlot({
                   <span className="text-gray-300">·</span>
                   <span>{totals.fatG}g שומן</span>
                 </div>
-                <div className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-bold ${th.calBg} ${th.calText}`}>
+                <div
+                  className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-bold ${th.calBg} ${th.calText}`}
+                >
                   🔥 {totals.calories}
                 </div>
               </div>
@@ -329,6 +482,9 @@ export function MealSlot({
         <PickerModal
           {...pickerConfig[openPicker]}
           th={th}
+          remaining={remaining}
+          isTrainingDay={isTrainingDay}
+          slotBudgetRatio={slotBudgetRatio}
           onClose={() => setOpenPicker(null)}
         />
       )}

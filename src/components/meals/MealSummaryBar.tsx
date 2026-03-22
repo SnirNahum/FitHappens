@@ -97,7 +97,6 @@ export function MealSummaryBar({
   const empty = { protein: null, carbs: null, side: null };
   const meals = [
     log.breakfast     ?? empty,
-    log.morningSnack  ?? empty,
     log.lunch         ?? empty,
     log.afternoonSnack ?? empty,
     log.evening       ?? empty,

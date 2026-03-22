@@ -13,7 +13,6 @@ function emptyLog(date: string): DailyLog {
     isCheatDay: false,
     cheatMealSlot: null,
     breakfast: emptyMeal(),
-    morningSnack: emptyMeal(),
     lunch: emptyMeal(),
     afternoonSnack: emptyMeal(),
     evening: emptyMeal(),

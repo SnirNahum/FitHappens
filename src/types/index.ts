@@ -25,7 +25,6 @@ export interface DailyLog {
   isCheatDay: boolean;
   cheatMealSlot: 'breakfast' | 'lunch' | 'evening' | null;
   breakfast: MealSelection;
-  morningSnack: MealSelection;
   lunch: MealSelection;
   afternoonSnack: MealSelection;
   evening: MealSelection;

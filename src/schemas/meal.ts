@@ -14,7 +14,6 @@ export const DailyLogSchema = z.object({
   isCheatDay: z.boolean(),
   cheatMealSlot: z.enum(['breakfast', 'lunch', 'evening']).nullable(),
   breakfast: z.string().nullable(),
-  morningSnack: z.string().nullable(),
   lunch: z.string().nullable(),
   afternoonSnack: z.string().nullable(),
   evening: z.string().nullable(),
